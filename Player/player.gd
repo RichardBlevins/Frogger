@@ -6,6 +6,10 @@ const GRID = 32
 var cooldown = false
 @onready var raycast = $RayCast
 @onready var frogPivot = $Pivot
+
+@onready var frogidle = $Pivot/FrogwizootteIdle
+@onready var frogjumping = $Pivot/Frogwizootte1
+
 @export var State = state
 
 func _physics_process(_delta: float) -> void:
@@ -26,11 +30,18 @@ func _physics_process(_delta: float) -> void:
 		Input.is_action_just_pressed("ui_up") or
 		Input.is_action_just_pressed("ui_down")
 	):
+		
 		cooldown = true
-		raycast.target_position = direction * GRID
-		frogPivot.look_at(raycast.target_position + position)
-		position += direction * GRID
+		raycast.target_position = direction * GRID #RAYCAST ROTATION
+		frogPivot.look_at(raycast.target_position + position)#FROG ROTATION
+		position += direction * GRID #MOVMENT
+		frogidle.visible = false
+		frogjumping.visible = true
 		await get_tree().create_timer(0.1).timeout
+		frogidle.visible = true
+		frogjumping.visible = false
+
+		
 		cooldown = false
 	
 	move_and_slide()

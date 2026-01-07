@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://bjy1c24lq0gf7"]
+[gd_scene load_steps=5 format=3 uid="uid://bjy1c24lq0gf7"]
 
 [ext_resource type="Script" uid="uid://g7t4bjlw0n67" path="res://Player/player.gd" id="1_l8h54"]
 [ext_resource type="Texture2D" uid="uid://iutpmq0ycoe4" path="res://Resources/frogwizootte-idle.png" id="2_4ntmi"]
+[ext_resource type="Texture2D" uid="uid://b5r4jy3om0cx3" path="res://Resources/frogwizootte-1.png" id="3_btcbx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sh265"]
 size = Vector2(32, 32)
@@ -26,5 +27,12 @@ position = Vector2(-5.0000024, 1.0000002)
 rotation = 1.5707964
 scale = Vector2(0.18, 0.18)
 texture = ExtResource("2_4ntmi")
+
+[node name="Frogwizootte1" type="Sprite2D" parent="Pivot"]
+visible = false
+position = Vector2(-5.000004, 0.9999962)
+rotation = 1.5707964
+scale = Vector2(0.18, 0.18)
+texture = ExtResource("3_btcbx")
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_screen_exited"]
