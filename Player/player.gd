@@ -4,7 +4,8 @@ enum state { DEAD }
 
 const GRID = 32
 var cooldown = false
-@onready var raycast = $RayCast
+@onready var raycastTarget = $RayCast.target_position
+@onready var frogPivot = $Pivot
 @export var State = state
 
 func _physics_process(_delta: float) -> void:
@@ -26,7 +27,9 @@ func _physics_process(_delta: float) -> void:
 		Input.is_action_just_pressed("ui_down")
 	):
 		cooldown = true
-		raycast.target_position = direction * GRID
+		raycastTarget = direction * GRID
+		frogPivot.rotation_degrees = direction.x * 90
+		print(frogPivot.rotation_degrees)
 		position += direction * GRID
 		await get_tree().create_timer(0.1).timeout
 		cooldown = false
@@ -36,5 +39,5 @@ func _physics_process(_delta: float) -> void:
 
 
 func _screen_exited() -> void:
-
+	
 	Manager.Death()
