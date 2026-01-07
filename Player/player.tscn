@@ -22,7 +22,8 @@ rect = Rect2(-8, -8, 16, 16)
 [node name="Pivot" type="Node2D" parent="."]
 
 [node name="FrogwizootteIdle" type="Sprite2D" parent="Pivot"]
-position = Vector2(1, 5)
+position = Vector2(-5.0000024, 1.0000002)
+rotation = 1.5707964
 scale = Vector2(0.18, 0.18)
 texture = ExtResource("2_4ntmi")
 

@@ -4,14 +4,14 @@ enum state { DEAD }
 
 const GRID = 32
 var cooldown = false
-@onready var raycastTarget = $RayCast.target_position
+@onready var raycast = $RayCast
 @onready var frogPivot = $Pivot
 @export var State = state
 
 func _physics_process(_delta: float) -> void:
 	if state.DEAD:
 		process_mode = Node.PROCESS_MODE_DISABLED
-		
+
 	var direction = Vector2(
 		Input.get_axis("ui_left", "ui_right"),
 		Input.get_axis("ui_up", "ui_down")
@@ -27,14 +27,15 @@ func _physics_process(_delta: float) -> void:
 		Input.is_action_just_pressed("ui_down")
 	):
 		cooldown = true
-		raycastTarget = direction * GRID
-		frogPivot.rotation_degrees = direction.x * 90
-		print(frogPivot.rotation_degrees)
+		raycast.target_position = direction * GRID
+		frogPivot.look_at(raycast.target_position + position)
 		position += direction * GRID
 		await get_tree().create_timer(0.1).timeout
 		cooldown = false
-		
+	
 	move_and_slide()
+
+
 
 
 
