@@ -24,16 +24,16 @@ rect = Rect2(-8, -8, 16, 16)
 [node name="Pivot" type="Node2D" parent="."]
 
 [node name="FrogwizootteIdle" type="Sprite2D" parent="Pivot"]
-position = Vector2(-5.0000024, 1.0000002)
+position = Vector2(-7, 0)
 rotation = 1.5707964
-scale = Vector2(0.18, 0.18)
+scale = Vector2(0.15, 0.15)
 texture = ExtResource("2_4ntmi")
 
 [node name="Frogwizootte1" type="Sprite2D" parent="Pivot"]
 visible = false
-position = Vector2(-5.000004, 0.9999962)
+position = Vector2(-7, 0)
 rotation = 1.5707964
-scale = Vector2(0.18, 0.18)
+scale = Vector2(0.15, 0.15)
 texture = ExtResource("3_btcbx")
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_screen_exited"]

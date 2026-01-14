@@ -1,13 +1,34 @@
-[gd_scene load_steps=2 format=3 uid="uid://cambtq723yu1x"]
+[gd_scene load_steps=6 format=3 uid="uid://cambtq723yu1x"]
 
+[ext_resource type="Script" uid="uid://b7xhhwc8wp54s" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://bjy1c24lq0gf7" path="res://Player/player.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://cy4xh4pwrfpsg" path="res://Entities/car.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://bt4sdj7kdgxeg" path="res://Resources/deadfrog.tscn" id="3_1bvp3"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_h2yge"]
 
 [node name="Main" type="Node2D"]
+script = ExtResource("1_0xm2m")
+car_scene = ExtResource("2_h2yge")
+dead_frog = ExtResource("3_1bvp3")
 
 [node name="Player" parent="." instance=ExtResource("1_ig7tw")]
-position = Vector2(-176, 112)
+position = Vector2(-256, -16)
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-160, -192)
+position = Vector2(-208, -320)
 anchor_mode = 0
 zoom = Vector2(2.025, 2.025)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+modulate = Color(0.4332657, 0.43326563, 0.43326563, 1)
+z_index = -1
+position = Vector2(2.7656555e-05, -112)
+scale = Vector2(448, 160.00002)
+mesh = SubResource("BoxMesh_h2yge")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

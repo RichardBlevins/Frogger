@@ -12,13 +12,11 @@ var cooldown = false
 @onready var frogidle = $Pivot/FrogwizootteIdle
 @onready var frogjumping = $Pivot/Frogwizootte1
 
+@onready var player = $Player
+var player_scene = preload("res://Player/player.tscn")
+
 func _ready() -> void:
-	for intro in 7:
-		await get_tree().create_timer(0.4).timeout
-		position.x += GRID
-		print(position)
-		hop_animation()
-	process_mode = Node.PROCESS_MODE_INHERIT
+	spawn_scene()
 		
 
 func _physics_process(_delta: float) -> void:
@@ -52,9 +50,18 @@ func _screen_exited() -> void:
 	if lives <= 0:
 		Manager.Death() #this is basically final death game over
 	else:
-		print(lives)
 		lives -= 1
-		#this die and den respawn
+		spawn_scene()
+		
+func spawn_scene():
+	process_mode = Node.PROCESS_MODE_DISABLED
+	position = Vector2(-256, -16)
+	frogPivot.rotation = 0
+	for intro in 8:
+		await get_tree().create_timer(0.5).timeout
+		position.x += GRID
+		hop_animation()
+	process_mode = Node.PROCESS_MODE_INHERIT
 
 func hop_animation():
 	frogidle.visible = false 
@@ -62,3 +69,5 @@ func hop_animation():
 	await get_tree().create_timer(0.1).timeout
 	frogidle.visible = true
 	frogjumping.visible = false
+	
+	
