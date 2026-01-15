@@ -8,7 +8,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0d0r8"]
 size = Vector2(52, 20)
 
-[node name="Car" type="Area2D"]
+[node name="Car" type="Area2D" groups=["car"]]
+z_index = 1
+collision_layer = 3
 script = ExtResource("1_vnm0f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -18,12 +20,14 @@ shape = SubResource("RectangleShape2D_0d0r8")
 [node name="Front" type="RayCast2D" parent="."]
 position = Vector2(0, -16)
 target_position = Vector2(-128, 0)
+collision_mask = 2
 collide_with_areas = true
 collide_with_bodies = false
 
 [node name="Back" type="RayCast2D" parent="."]
 position = Vector2(0, -16)
 target_position = Vector2(56, 0)
+collision_mask = 2
 collide_with_areas = true
 collide_with_bodies = false
 

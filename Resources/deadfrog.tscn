@@ -3,5 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dsbt7p2t24dfi" path="res://Resources/Deadfrig .png" id="1_m0ach"]
 
 [node name="Deadfrog" type="Sprite2D"]
+process_mode = 4
+z_index = -1
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("1_m0ach")

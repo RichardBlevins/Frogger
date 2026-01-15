@@ -26,6 +26,7 @@ func _ready():
 	texture_nodes[random_index].visible = true
 
 func _process(delta: float) -> void:
+	
 	var front_collider = front.get_collider()
 	var back_collider = back.get_collider()
 	
@@ -64,7 +65,8 @@ func _process(delta: float) -> void:
 
 
 func _on_area_entered(area: Area2D) -> void:
-	queue_free()
+	if area.is_in_group("car"):
+		queue_free()
 	#explode... when touching car
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:

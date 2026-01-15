@@ -22,3 +22,7 @@ Manager="*res://Manager.gd"
 
 window/size/viewport_width=842
 window/stretch/mode="viewport"
+
+[global_group]
+
+car=""

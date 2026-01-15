@@ -1,16 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://cambtq723yu1x"]
+[gd_scene load_steps=5 format=3 uid="uid://cambtq723yu1x"]
 
 [ext_resource type="Script" uid="uid://b7xhhwc8wp54s" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://bjy1c24lq0gf7" path="res://Player/player.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://cy4xh4pwrfpsg" path="res://Entities/car.tscn" id="2_h2yge"]
-[ext_resource type="PackedScene" uid="uid://bt4sdj7kdgxeg" path="res://Resources/deadfrog.tscn" id="3_1bvp3"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_h2yge"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_0xm2m")
 car_scene = ExtResource("2_h2yge")
-dead_frog = ExtResource("3_1bvp3")
 
 [node name="Player" parent="." instance=ExtResource("1_ig7tw")]
 position = Vector2(-256, -16)

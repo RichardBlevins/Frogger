@@ -1,11 +1,18 @@
 extends Node2D
 
 @export var car_scene: PackedScene
-@export var dead_frog: PackedScene
+var roadkill_scene = preload("res://Resources/deadfrog.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	$Player.died.connect(spawn_roadkill)
+
+func spawn_roadkill(pos: Vector2):
+	var roadkill = roadkill_scene.instantiate()
+	add_child(roadkill)
+	roadkill.global_position = pos
+	
+
 
 func _on_timer_timeout() -> void:
 	var GRID = -32
