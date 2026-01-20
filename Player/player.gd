@@ -3,6 +3,8 @@ const GRID = 32
 var cooldown = false
 var is_dead = false  # Prevent multiple death calls
 @export var lives = 3
+
+@onready var camera = $Camera2D
 @onready var raycast = $RayCast
 @onready var frogPivot = $Pivot
 @onready var frogidle = $Pivot/FrogwizootteIdle
@@ -11,10 +13,11 @@ var is_dead = false  # Prevent multiple death calls
 signal died(death_position)
 
 func _ready() -> void:
+	camera.position.x -= GRID * 8
 	spawn_scene()
 		
 func _physics_process(_delta: float) -> void:
-	print(lives)
+	print(camera.position)
 	# Don't allow input while dead
 	if is_dead:
 		return
@@ -89,3 +92,4 @@ func _screen_exited() -> void:
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
 	die()
+	

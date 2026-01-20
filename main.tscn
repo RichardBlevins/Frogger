@@ -1,10 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://cambtq723yu1x"]
+[gd_scene load_steps=8 format=3 uid="uid://cambtq723yu1x"]
 
 [ext_resource type="Script" uid="uid://b7xhhwc8wp54s" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://bjy1c24lq0gf7" path="res://Player/player.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://cy4xh4pwrfpsg" path="res://Entities/car.tscn" id="2_h2yge"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_1bvp3"]
+
 [sub_resource type="BoxMesh" id="BoxMesh_h2yge"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_lquwl"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_7mycd"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_0xm2m")
@@ -13,20 +19,87 @@ car_scene = ExtResource("2_h2yge")
 [node name="Player" parent="." instance=ExtResource("1_ig7tw")]
 position = Vector2(-256, -16)
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-208, -320)
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(48, -304)
 anchor_mode = 0
 zoom = Vector2(2.025, 2.025)
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-modulate = Color(0.4332657, 0.43326563, 0.43326563, 1)
-z_index = -1
-position = Vector2(2.7656555e-05, -112)
-scale = Vector2(448, 160.00002)
-mesh = SubResource("BoxMesh_h2yge")
+limit_left = -208
+limit_top = -416
+limit_right = -208
+limit_bottom = -320
+position_smoothing_enabled = true
+position_smoothing_speed = 0.1
+editor_draw_limits = true
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
 autostart = true
+
+[node name="map" type="Node2D" parent="."]
+
+[node name="MeshInstance2D5" type="MeshInstance2D" parent="map"]
+modulate = Color(0, 0.4862745, 0, 1)
+z_index = -1
+position = Vector2(0, -208)
+scale = Vector2(448, 32.00002)
+mesh = SubResource("BoxMesh_1bvp3")
+
+[node name="MeshInstance2D2" type="MeshInstance2D" parent="map"]
+modulate = Color(0, 0.4862745, 0, 1)
+z_index = -1
+position = Vector2(0, -16)
+scale = Vector2(448, 32)
+mesh = SubResource("BoxMesh_1bvp3")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="map"]
+modulate = Color(0, 0, 0, 1)
+z_index = -1
+position = Vector2(2.1684043e-19, -112)
+scale = Vector2(448, 160.00002)
+mesh = SubResource("BoxMesh_h2yge")
+
+[node name="MeshInstance2D4" type="MeshInstance2D" parent="map"]
+modulate = Color(0, 0.4862745, 1, 1)
+z_index = -1
+position = Vector2(1.4409423e-05, -319.875)
+scale = Vector2(448.00003, 192.24997)
+mesh = SubResource("BoxMesh_lquwl")
+
+[node name="lilypads" type="Node2D" parent="map"]
+
+[node name="MeshInstance2D6" type="MeshInstance2D" parent="map/lilypads"]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(-80.00001, -400.00003)
+rotation = 0.7853982
+scale = Vector2(15.999833, 16.000008)
+mesh = SubResource("BoxMesh_7mycd")
+
+[node name="MeshInstance2D5" type="MeshInstance2D" parent="map/lilypads"]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(-160, -400)
+rotation = 0.7853982
+scale = Vector2(15.999999, 16.00003)
+mesh = SubResource("BoxMesh_7mycd")
+
+[node name="MeshInstance2D7" type="MeshInstance2D" parent="map/lilypads"]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(0, -400.00003)
+rotation = 0.7853982
+scale = Vector2(15.999841, 16.000008)
+mesh = SubResource("BoxMesh_7mycd")
+
+[node name="MeshInstance2D8" type="MeshInstance2D" parent="map/lilypads"]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(80.00001, -400.00003)
+rotation = 0.7853982
+scale = Vector2(15.999848, 16.000008)
+mesh = SubResource("BoxMesh_7mycd")
+
+[node name="MeshInstance2D9" type="MeshInstance2D" parent="map/lilypads"]
+modulate = Color(0, 1, 0, 1)
+position = Vector2(160, -400.00003)
+rotation = 0.7853982
+scale = Vector2(15.999841, 16.000008)
+mesh = SubResource("BoxMesh_7mycd")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
