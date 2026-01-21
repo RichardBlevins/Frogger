@@ -2,26 +2,29 @@ extends CharacterBody2D
 const GRID = 32
 var cooldown = false
 var is_dead = false  # Prevent multiple death calls
+var on_log = false  # Track if player is on a log
+var current_log = null  # Reference to the log we're standing on
 @export var lives = 3
-
 @onready var camera = $Camera2D
 @onready var raycast = $RayCast
 @onready var frogPivot = $Pivot
 @onready var frogidle = $Pivot/FrogwizootteIdle
 @onready var frogjumping = $Pivot/Frogwizootte1
-
+@onready var hitbox = $Hitbox  # Make sure to reference your Area2D
 signal died(death_position)
 
 func _ready() -> void:
 	camera.position.x -= GRID * 8
 	spawn_scene()
 		
-func _physics_process(_delta: float) -> void:
-	print(camera.position)
+func _physics_process(delta: float) -> void:
 	# Don't allow input while dead
 	if is_dead:
 		return
-		
+	
+	# Check water and logs every frame
+	check_water_and_logs(delta)
+	
 	var direction = Vector2(
 		Input.get_axis("ui_left", "ui_right"),
 		Input.get_axis("ui_up", "ui_down")
@@ -45,6 +48,39 @@ func _physics_process(_delta: float) -> void:
 		cooldown = false
 	
 	move_and_slide()
+
+func check_water_and_logs(delta: float):
+	# Reset log status
+	on_log = false
+	current_log = null
+	
+	# Get all overlapping areas
+	var overlapping_areas = hitbox.get_overlapping_areas()
+	
+	# First check if we're on a log
+	for area in overlapping_areas:
+		if area.is_in_group("log"):
+			on_log = true
+			current_log = area
+			# Move with the log (adjust based on your log's implementation)
+			# If your log has a velocity variable:
+			if area.has_method("get_velocity"):
+				position.x += area.get_velocity() * delta
+			# Or if the log parent has a velocity:
+			elif area.get_parent().has("velocity"):
+				position.x += area.get_parent().velocity.x * delta
+			break
+	
+	# Then check if we're in water
+	var in_water = false
+	for area in overlapping_areas:
+		if area.is_in_group("water"):
+			in_water = true
+			break
+	
+	# Die only if in water AND not on a log
+	if in_water and not on_log:
+		die()
 
 func spawn_scene():
 	is_dead = false
@@ -72,7 +108,6 @@ func die():
 		return
 	
 	is_dead = true
-	died.emit(global_position)
 	lives -= 1
 	
 	# Check if game over
@@ -91,5 +126,7 @@ func _screen_exited() -> void:
 	die()
 
 func _on_hitbox_area_entered(area: Area2D) -> void:
-	die()
-	
+	if area.is_in_group("car"):
+		died.emit(global_position)
+		die()
+	# Removed the instant water death - now handled in check_water_and_logs()

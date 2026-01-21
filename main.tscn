@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cambtq723yu1x"]
+[gd_scene load_steps=10 format=3 uid="uid://cambtq723yu1x"]
 
 [ext_resource type="Script" uid="uid://b7xhhwc8wp54s" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://bjy1c24lq0gf7" path="res://Player/player.tscn" id="1_ig7tw"]
-[ext_resource type="PackedScene" uid="uid://cy4xh4pwrfpsg" path="res://Entities/car.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://cy4xh4pwrfpsg" path="res://Entities/car/car.tscn" id="2_h2yge"]
+[ext_resource type="PackedScene" uid="uid://kycmmcmr1eax" path="res://Entities/log/log.tscn" id="4_1bvp3"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_1bvp3"]
 
@@ -11,6 +12,9 @@
 [sub_resource type="BoxMesh" id="BoxMesh_lquwl"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_7mycd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
+size = Vector2(416, 208)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_0xm2m")
@@ -28,7 +32,7 @@ limit_top = -416
 limit_right = -208
 limit_bottom = -320
 position_smoothing_enabled = true
-position_smoothing_speed = 0.1
+position_smoothing_speed = 0.5
 editor_draw_limits = true
 
 [node name="Timer" type="Timer" parent="."]
@@ -69,7 +73,7 @@ mesh = SubResource("BoxMesh_lquwl")
 
 [node name="MeshInstance2D6" type="MeshInstance2D" parent="map/lilypads"]
 modulate = Color(0, 1, 0, 1)
-position = Vector2(-80.00001, -400.00003)
+position = Vector2(-63.999992, -400.00003)
 rotation = 0.7853982
 scale = Vector2(15.999833, 16.000008)
 mesh = SubResource("BoxMesh_7mycd")
@@ -83,23 +87,34 @@ mesh = SubResource("BoxMesh_7mycd")
 
 [node name="MeshInstance2D7" type="MeshInstance2D" parent="map/lilypads"]
 modulate = Color(0, 1, 0, 1)
-position = Vector2(0, -400.00003)
+position = Vector2(64, -400.00003)
 rotation = 0.7853982
 scale = Vector2(15.999841, 16.000008)
 mesh = SubResource("BoxMesh_7mycd")
 
 [node name="MeshInstance2D8" type="MeshInstance2D" parent="map/lilypads"]
 modulate = Color(0, 1, 0, 1)
-position = Vector2(80.00001, -400.00003)
+position = Vector2(127.99999, -400)
 rotation = 0.7853982
 scale = Vector2(15.999848, 16.000008)
 mesh = SubResource("BoxMesh_7mycd")
 
 [node name="MeshInstance2D9" type="MeshInstance2D" parent="map/lilypads"]
 modulate = Color(0, 1, 0, 1)
-position = Vector2(160, -400.00003)
+position = Vector2(192.00003, -400.00006)
 rotation = 0.7853982
 scale = Vector2(15.999841, 16.000008)
 mesh = SubResource("BoxMesh_7mycd")
+
+[node name="Water" type="Area2D" parent="." groups=["water"]]
+z_index = -1
+position = Vector2(0, -240)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Water"]
+position = Vector2(0, -88)
+shape = SubResource("RectangleShape2D_h2yge")
+
+[node name="Log" parent="." instance=ExtResource("4_1bvp3")]
+position = Vector2(0, -240)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

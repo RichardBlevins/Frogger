@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cy4xh4pwrfpsg"]
 
-[ext_resource type="Script" uid="uid://c683lhf0nxn7j" path="res://Entities/car.gd" id="1_vnm0f"]
+[ext_resource type="Script" uid="uid://c683lhf0nxn7j" path="res://Entities/car/car.gd" id="1_vnm0f"]
 [ext_resource type="Texture2D" uid="uid://c4c5tc4fsxyiy" path="res://Resources/Cars/Carl.png" id="2_5aym7"]
 [ext_resource type="Texture2D" uid="uid://cka4jhoay4cl5" path="res://Resources/Cars/Carls.png" id="3_l56n5"]
 [ext_resource type="Texture2D" uid="uid://iy2gsgorsnlf" path="res://Resources/Cars/Flesh.png" id="4_3h288"]
