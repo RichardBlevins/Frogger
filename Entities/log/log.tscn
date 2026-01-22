@@ -1,18 +1,40 @@
-[gd_scene load_steps=3 format=3 uid="uid://kycmmcmr1eax"]
+[gd_scene load_steps=4 format=3 uid="uid://kycmmcmr1eax"]
+
+[ext_resource type="Script" uid="uid://bk4xdbjr316yi" path="res://Entities/log/log.gd" id="1_xrfyu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_b4d4o"]
-size = Vector2(128, 32)
+size = Vector2(128, 16)
 
 [sub_resource type="BoxMesh" id="BoxMesh_b4d4o"]
 
 [node name="Log" type="Area2D" groups=["log"]]
 z_index = -1
+script = ExtResource("1_xrfyu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_b4d4o")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
 modulate = Color(0.4957912, 0.24778259, 9.62615e-08, 1)
-position = Vector2(0, -4.7683716e-07)
 scale = Vector2(128, 32)
 mesh = SubResource("BoxMesh_b4d4o")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(96, 0)
+
+[node name="Front" type="RayCast2D" parent="."]
+position = Vector2(-64, 0)
+target_position = Vector2(-128, 0)
+collision_mask = 2
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Back" type="RayCast2D" parent="."]
+position = Vector2(64, 0)
+target_position = Vector2(56, 0)
+collision_mask = 2
+collide_with_areas = true
+collide_with_bodies = false
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

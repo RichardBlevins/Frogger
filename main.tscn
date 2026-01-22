@@ -19,6 +19,7 @@ size = Vector2(416, 208)
 [node name="Main" type="Node2D"]
 script = ExtResource("1_0xm2m")
 car_scene = ExtResource("2_h2yge")
+log_scene = ExtResource("4_1bvp3")
 
 [node name="Player" parent="." instance=ExtResource("1_ig7tw")]
 position = Vector2(-256, -16)
@@ -35,8 +36,12 @@ position_smoothing_enabled = true
 position_smoothing_speed = 0.5
 editor_draw_limits = true
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Car_Timer" type="Timer" parent="."]
 wait_time = 0.1
+autostart = true
+
+[node name="Log_Timer" type="Timer" parent="."]
+wait_time = 0.5
 autostart = true
 
 [node name="map" type="Node2D" parent="."]
@@ -114,7 +119,5 @@ position = Vector2(0, -240)
 position = Vector2(0, -88)
 shape = SubResource("RectangleShape2D_h2yge")
 
-[node name="Log" parent="." instance=ExtResource("4_1bvp3")]
-position = Vector2(0, -240)
-
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Car_Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Log_Timer" to="." method="_on_log_timer_timeout"]

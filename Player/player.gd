@@ -18,6 +18,7 @@ func _ready() -> void:
 	spawn_scene()
 		
 func _physics_process(delta: float) -> void:
+
 	# Don't allow input while dead
 	if is_dead:
 		return
@@ -47,29 +48,28 @@ func _physics_process(delta: float) -> void:
 		await get_tree().create_timer(0.1).timeout  
 		cooldown = false
 	
-	move_and_slide()
 
+
+#==========================
+# CHECK IF FROG IS ON LOG
+#==========================
 func check_water_and_logs(delta: float):
-	# Reset log status
 	on_log = false
 	current_log = null
 	
-	# Get all overlapping areas
 	var overlapping_areas = hitbox.get_overlapping_areas()
 	
-	# First check if we're on a log
 	for area in overlapping_areas:
 		if area.is_in_group("log"):
 			on_log = true
 			current_log = area
-			# Move with the log (adjust based on your log's implementation)
-			# If your log has a velocity variable:
-			if area.has_method("get_velocity"):
-				position.x += area.get_velocity() * delta
-			# Or if the log parent has a velocity:
-			elif area.get_parent().has("velocity"):
-				position.x += area.get_parent().velocity.x * delta
+			
+			# Get speed directly from the Area2D metadata
+			if area.has_meta("speed"):
+
+				position.x -= area.get_meta("speed")
 			break
+			
 	
 	# Then check if we're in water
 	var in_water = false
@@ -82,6 +82,11 @@ func check_water_and_logs(delta: float):
 	if in_water and not on_log:
 		die()
 
+#==========================
+# INITIALIZESES THE FROG AFTER DIES
+# SO PLAYER CANNOT MOVE AND IS IN THE CORRECT POSITION FOR THE ANIATION
+#also does the animation itself
+#==========================
 func spawn_scene():
 	is_dead = false
 	process_mode = Node.PROCESS_MODE_DISABLED
@@ -95,12 +100,14 @@ func spawn_scene():
 	
 	process_mode = Node.PROCESS_MODE_INHERIT
 	
+#HOP aNIMATioN
 func hop_animation():
 	frogidle.visible = false 
 	frogjumping.visible = true
 	await get_tree().create_timer(0.1).timeout
 	frogidle.visible = true
 	frogjumping.visible = false
+
 
 func die():
 	# Prevent multiple death calls
@@ -129,4 +136,3 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 	if area.is_in_group("car"):
 		died.emit(global_position)
 		die()
-	# Removed the instant water death - now handled in check_water_and_logs()
